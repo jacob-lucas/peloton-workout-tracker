@@ -27,6 +27,7 @@ dependencies {
     compile "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
     compile "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}"
     compile "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+    compile "io.vavr:vavr:${vavrVersion}"
 
     annotationProcessor "org.immutables:value:${immutablesVersion}"
 
