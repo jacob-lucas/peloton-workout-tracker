@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.time.Instant;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 public class WorkoutTest {
@@ -128,7 +129,7 @@ public class WorkoutTest {
     @Test
     public void handlesUnsupportedFitnessDiscipline() {
         final Try<Workout> workoutTry = Workout.parse(EXAMPLE_MED);
-        assertThat(workoutTry.isSuccess(), is(false));
-
+        assertThat(workoutTry.isSuccess(), is(true));
+        assertThat(workoutTry.get(), is(nullValue()));
     }
 }
