@@ -1,5 +1,6 @@
 package com.jacoblucas.peloton.models;
 
+import com.google.common.collect.ImmutableSet;
 import com.jacoblucas.peloton.utils.ArrayHelper;
 import io.vavr.control.Try;
 import org.immutables.value.Value;
@@ -8,6 +9,7 @@ import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 import java.util.Optional;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 @Value.Immutable
@@ -16,6 +18,7 @@ public abstract class Workout {
     static final DateTimeFormatter ALT_DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm (x)");
 
     private static final String DELIMITER = ",";
+    private static final Set<String> SUPPORTED_FITNESS_DISCIPLINES = ImmutableSet.of("Cycling");
 
     public abstract Instant getTimestamp();
 
@@ -80,12 +83,17 @@ public abstract class Workout {
                 final Instant timestamp = Instant.from(getDateTime(parts[0]));
                 final Instant classTimestamp = Instant.from(getDateTime(parts[7]));
 
+                final String fitnessDiscipline = parts[4];
+                if (!SUPPORTED_FITNESS_DISCIPLINES.contains(fitnessDiscipline)) {
+                    return null;
+                }
+
                 return ImmutableWorkout.builder()
                         .timestamp(timestamp)
                         .isLive(parts[1].equalsIgnoreCase("live"))
                         .instructorName(parts[2])
                         .minutes(Integer.parseInt(parts[3]))
-                        .fitnessDiscipline(parts[4])
+                        .fitnessDiscipline(fitnessDiscipline)
                         .type(parts[5])
                         .title(parts[6])
                         .classTimestamp(classTimestamp)
@@ -102,7 +110,7 @@ public abstract class Workout {
                         .build();
             } catch (Throwable t) {
                 System.out.println("Failed to parse: " + csv);
-                System.out.println(t.getMessage());
+                System.out.println(t.toString());
                 throw t;
             }
         });

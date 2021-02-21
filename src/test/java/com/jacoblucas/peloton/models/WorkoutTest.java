@@ -12,6 +12,7 @@ public class WorkoutTest {
     private static final String EXAMPLE = "2020-09-24 08:13 (PDT),On Demand,Denis Morton,30,Cycling,Power Zone,30 min Power Zone Ride,2020-09-15 04:23 (PDT),269,150,43%,85,18.45,9.22,534,152.57,,";
     private static final String EXAMPLE_TZ = "2021-02-01 18:23 (-08),On Demand,Kendall Toole,30,Cycling,Theme,30 min Movie Buff Ride,2021-01-25 08:25 (-08),271,151,45%,80,18.75,9.37,526,150.69,,";
     private static final String EXAMPLE_NO_HR = "2020-04-17 12:29 (PDT),On Demand,Cody Rigsby,20,Cycling,Theme,20 min Beginner Ride,2018-08-24 12:11 (PDT),119,99,37%,84,15.81,5.26,164,,,";
+    private static final String EXAMPLE_MED = "2020-12-12 23:22 (PST),On Demand,Kristin McGee,15,Meditation,Relax & Sleep,15 min Sleep Meditation,2020-10-29 07:00 (PST),,,,,,,,,,";
 
     @Test
     public void testSuccessfulParse() {
@@ -122,5 +123,12 @@ public class WorkoutTest {
         final Workout workout = Workout.parse(EXAMPLE).get();
 
         assertThat(workout.getOutputPerMinute().get(), is(8.966666666666667D));
+    }
+
+    @Test
+    public void handlesUnsupportedFitnessDiscipline() {
+        final Try<Workout> workoutTry = Workout.parse(EXAMPLE_MED);
+        assertThat(workoutTry.isSuccess(), is(false));
+
     }
 }
