@@ -1,7 +1,7 @@
 package com.jacoblucas.peloton.utils;
 
 import com.google.common.collect.ImmutableList;
-import com.jacoblucas.peloton.handlers.Bucket;
+import com.jacoblucas.peloton.models.Bucket;
 import com.jacoblucas.peloton.models.Workout;
 import org.junit.Test;
 

@@ -1,7 +1,7 @@
 package com.jacoblucas.peloton.utils;
 
 import com.google.common.collect.ImmutableMap;
-import com.jacoblucas.peloton.handlers.Bucket;
+import com.jacoblucas.peloton.models.Bucket;
 import com.jacoblucas.peloton.models.Workout;
 
 import java.time.DayOfWeek;
