@@ -1,9 +1,8 @@
 package com.jacoblucas.peloton.models;
 
+import com.jacoblucas.peloton.utils.TimestampParser;
 import io.vavr.control.Try;
 import org.junit.Test;
-
-import java.time.Instant;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -20,14 +19,14 @@ public class WorkoutTest {
         final Try<Workout> workoutTry = Workout.parse(EXAMPLE);
 
         final Workout expected = ImmutableWorkout.builder()
-                .timestamp(Instant.from(Workout.DATE_TIME_FORMATTER.parse("2020-09-24 08:13 (PDT)")))
+                .timestamp(TimestampParser.parse("2020-09-24 08:13 (PDT)"))
                 .isLive(false)
                 .instructorName("Denis Morton")
                 .minutes(30)
                 .fitnessDiscipline("Cycling")
                 .type("Power Zone")
                 .title("30 min Power Zone Ride")
-                .classTimestamp(Instant.from(Workout.DATE_TIME_FORMATTER.parse("2020-09-15 04:23 (PDT)")))
+                .classTimestamp(TimestampParser.parse("2020-09-15 04:23 (PDT)"))
                 .totalOutput(269)
                 .averageWatts(150)
                 .averageResistance(43)
@@ -50,14 +49,14 @@ public class WorkoutTest {
         final Try<Workout> workoutTry = Workout.parse(EXAMPLE_TZ);
 
         final Workout expected = ImmutableWorkout.builder()
-                .timestamp(Instant.from(Workout.ALT_DATE_TIME_FORMATTER.parse("2021-02-01 18:23 (-08)")))
+                .timestamp(TimestampParser.parse("2021-02-01 18:23 (-08)"))
                 .isLive(false)
                 .instructorName("Kendall Toole")
                 .minutes(30)
                 .fitnessDiscipline("Cycling")
                 .type("Theme")
                 .title("30 min Movie Buff Ride")
-                .classTimestamp(Instant.from(Workout.ALT_DATE_TIME_FORMATTER.parse("2021-01-25 08:25 (-08)")))
+                .classTimestamp(TimestampParser.parse("2021-01-25 08:25 (-08)"))
                 .totalOutput(271)
                 .averageWatts(151)
                 .averageResistance(45)
@@ -79,14 +78,14 @@ public class WorkoutTest {
         final Try<Workout> workoutTry = Workout.parse(EXAMPLE_NO_HR);
 
         final Workout expected = ImmutableWorkout.builder()
-                .timestamp(Instant.from(Workout.DATE_TIME_FORMATTER.parse("2020-04-17 12:29 (PDT)")))
+                .timestamp(TimestampParser.parse("2020-04-17 12:29 (PDT)"))
                 .isLive(false)
                 .instructorName("Cody Rigsby")
                 .minutes(20)
                 .fitnessDiscipline("Cycling")
                 .type("Theme")
                 .title("20 min Beginner Ride")
-                .classTimestamp(Instant.from(Workout.DATE_TIME_FORMATTER.parse("2018-08-24 12:11 (PDT)")))
+                .classTimestamp(TimestampParser.parse("2018-08-24 12:11 (PDT)"))
                 .totalOutput(119)
                 .averageWatts(99)
                 .averageResistance(37)

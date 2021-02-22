@@ -2,21 +2,16 @@ package com.jacoblucas.peloton.models;
 
 import com.google.common.collect.ImmutableSet;
 import com.jacoblucas.peloton.utils.ArrayHelper;
+import com.jacoblucas.peloton.utils.TimestampParser;
 import io.vavr.control.Try;
 import org.immutables.value.Value;
 
 import java.time.Instant;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
 import java.util.Optional;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 @Value.Immutable
 public abstract class Workout {
-    static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm (z)");
-    static final DateTimeFormatter ALT_DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm (x)");
-
     private static final String DELIMITER = ",";
     private static final Set<String> SUPPORTED_FITNESS_DISCIPLINES = ImmutableSet.of("Cycling");
 
@@ -80,8 +75,8 @@ public abstract class Workout {
             try {
                 final String[] parts = csv.split(DELIMITER);
 
-                final Instant timestamp = Instant.from(getDateTime(parts[0]));
-                final Instant classTimestamp = Instant.from(getDateTime(parts[7]));
+                final Instant timestamp = TimestampParser.parse(parts[0]);
+                final Instant classTimestamp = TimestampParser.parse(parts[7]);
 
                 final String fitnessDiscipline = parts[4];
                 if (!SUPPORTED_FITNESS_DISCIPLINES.contains(fitnessDiscipline)) {
@@ -114,16 +109,5 @@ public abstract class Workout {
                 throw t;
             }
         });
-    }
-
-    private static TemporalAccessor getDateTime(final String str) {
-        final Pattern pattern = Pattern.compile(".*[A-Z]{3}.*");
-        final DateTimeFormatter dateTimeFormatter;
-        if (pattern.matcher(str).matches()) {
-            dateTimeFormatter = DATE_TIME_FORMATTER;
-        } else {
-            dateTimeFormatter = ALT_DATE_TIME_FORMATTER;
-        }
-        return dateTimeFormatter.parse(str);
     }
 }
