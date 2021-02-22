@@ -1,5 +1,7 @@
 package com.jacoblucas.peloton.handlers;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.jacoblucas.peloton.models.Bucket;
 import org.immutables.value.Value;
 
@@ -8,6 +10,7 @@ import java.time.ZoneId;
 import java.time.zone.ZoneRulesException;
 
 @Value.Immutable
+@JsonDeserialize(as = ImmutableWorkoutSummaryRequest.class)
 public abstract class WorkoutSummaryRequest {
     public abstract RequestContext getRequestContext();
 
@@ -25,6 +28,7 @@ public abstract class WorkoutSummaryRequest {
         return LocalDate.MAX;
     }
 
+    @JsonIgnore
     public ZoneId getTimezone() {
         return ZoneId.of(getTimezoneString());
     }

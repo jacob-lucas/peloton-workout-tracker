@@ -1,5 +1,6 @@
 package com.jacoblucas.peloton.models;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.collect.ImmutableSet;
 import com.jacoblucas.peloton.utils.ArrayHelper;
 import com.jacoblucas.peloton.utils.TimestampParser;
@@ -11,6 +12,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Value.Immutable
+@JsonDeserialize(as = ImmutableWorkout.class)
 public abstract class Workout {
     private static final String DELIMITER = ",";
     private static final Set<String> SUPPORTED_FITNESS_DISCIPLINES = ImmutableSet.of("Cycling");

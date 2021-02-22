@@ -1,0 +1,9 @@
+{
+  "requestContext": {
+    "username": "foo@gmail.com",
+    "password": "abcdefg"
+  },
+  "bucket": "WEEKLY",
+  "timezoneString": "America/Los_Angeles",
+  "fromDate": "2021-01-01"
+}
