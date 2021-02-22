@@ -30,6 +30,7 @@ public class WorkoutSummaryRequestHandler extends RequestHandler implements Requ
 
             final WorkoutSummaryResponse response = ImmutableWorkoutSummaryResponse.builder()
                     .fromDate(request.getFromDate())
+                    .toDate(request.getToDate())
                     .bucket(request.getBucket())
                     .workoutSummary(summary)
                     .build();
