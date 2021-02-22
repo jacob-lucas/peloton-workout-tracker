@@ -7,7 +7,7 @@ import com.jacoblucas.peloton.models.Workout;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.ZoneId;
 import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
@@ -22,10 +22,14 @@ public final class WorkoutSummarizer {
 
     private WorkoutSummarizer() {}
 
-    public static Map<LocalDate, List<Workout>> summarize(final List<Workout> history, final Bucket bucket) {
+    public static Map<LocalDate, List<Workout>> summarize(
+            final List<Workout> history,
+            final Bucket bucket,
+            final ZoneId timezone
+    ) {
         return history.stream()
                 .collect(Collectors.groupingBy(w ->
-                        LocalDateTime.ofInstant(w.getTimestamp(), ZoneOffset.UTC)
+                        LocalDateTime.ofInstant(w.getTimestamp(), timezone)
                                 .toLocalDate()
                                 .with(ADJUSTORS.get(bucket))));
     }
