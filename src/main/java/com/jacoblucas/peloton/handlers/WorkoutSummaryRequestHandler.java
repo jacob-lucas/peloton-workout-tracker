@@ -36,9 +36,10 @@ public class WorkoutSummaryRequestHandler extends RequestHandler implements Requ
                     .build();
 
             objectMapper.writeValue(output, response);
-        } catch (final Exception e) {
+        } catch (final IOException e) {
             final String msg = String.format("Unable to process %s: %s", input, e);
             context.getLogger().log(msg);
+            throw e;
         }
     }
 }
